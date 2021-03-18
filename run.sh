@@ -40,7 +40,7 @@ done
 [ $USER == "" ] && usage
 
 echo "====== Connection Test (input password) ========"
-ssh -P $PORT $USER@$IP
+ssh -p $PORT $USER@$IP
 status=$(ssh -o ConnectTimeout=5 -p $PORT $USER@$IP echo ok 2>&1)
 
 if [[ $status == ok ]] ; then
