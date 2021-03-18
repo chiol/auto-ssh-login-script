@@ -3,7 +3,6 @@ function usage() {
     -i IP         ip 주소
     -p PORT       port
     -u USER       user
-    -e PASSWORD   password
     \\n" "$0" 1>&2
     exit 1
 }
@@ -18,9 +17,6 @@ while getopts "u:i:p:e:h" opt; do
         ;;
     p)
         PORT=$OPTARG
-        ;;
-    e)
-        PASSWORD=$OPTARG
         ;;
     h)
         usage
@@ -42,7 +38,6 @@ done
 [ $IP == "" ] && usage
 [ $PORT == "" ] && usage
 [ $USER == "" ] && usage
-[ $PASSWORD == "" ] && usage
 
 echo "====== Connection Test (input password) ========"
 ssh -P $PORT $USER@$IP

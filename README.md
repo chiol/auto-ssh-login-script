@@ -3,7 +3,7 @@
 ## 실행법
 
 ```bash
-./run.sh -i IP -p PORT -u USER -e PASSWORD
+./run.sh -i IP -p PORT -u USER
 ```
 
 ## 사용법
