@@ -40,10 +40,10 @@ done
 [ $USER == "" ] && usage
 
 echo "====== Connection Test (input password) ========"
-ssh -p $PORT $USER@$IP
 status=$(ssh -o ConnectTimeout=5 -p $PORT $USER@$IP echo ok 2>&1)
 
 if [[ $status == ok ]] ; then
+    
     NAME="${IP}_${PORT}"
     KEY_NAME="${IP}_${PORT}"
     KEY_PATH="$HOME/.ssh/$KEY_NAME"
@@ -56,8 +56,8 @@ if [[ $status == ok ]] ; then
     echo "  Port $PORT" >> ~/.ssh/config
     echo "  IdentityFile $KEY_PATH" >> ~/.ssh/config
 
-    scp -P $PORT $KEY_PATH.pub $USER@$IP:~/.ssh/$KEY_NAME.pub
-    ssh -p $PORT $USER@$IP "cat ~/.ssh/$KEY_NAME.pub >> ~/.ssh/authorized_keys && rm -rf ~/.ssh/$KEY_NAME.pub"
+    PUB_KEY=$(cat ~/.ssh/$KEY_NAME.pub)
+    ssh -p $PORT $USER@$IP "if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi && echo $PUB_KEY >> ~/.ssh/authorized_keys"
 
 elif [[ $status == "Permission denied"* ]] ; then
   echo no_auth
